@@ -202,20 +202,33 @@ select {
 
 .button-group {
     display: flex;
-    justify-content: flex-start;
-    margin-top: 30px;
-    padding: 20px 0;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: 32px;
+}
+
+button {
+    padding: 10px 24px;
+    border: none;
+    border-radius: 4px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.next-btn, .submit-btn {
+    background-color: #4a5568;
+    color: white;
+}
+
+.next-btn:hover, .submit-btn:hover {
+    background-color: #2d3748;
 }
 
 .back-btn {
-    padding: 10px 24px;
     background-color: #e2e8f0;
     color: #4a5568;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: all 0.2s ease;
 }
 
 .back-btn:hover {

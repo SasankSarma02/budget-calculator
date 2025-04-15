@@ -231,4 +231,9 @@ document.addEventListener('DOMContentLoaded', function() {
         devValue.textContent = this.value;
         calculateBudget();
     });
+});
+
+document.getElementById('budgetForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    alert('Form submitted successfully! We will contact you soon.');
 }); 
