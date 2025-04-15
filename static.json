@@ -1,0 +1,6 @@
+{
+    "routes": [
+      { "src": "/oauth/callback", "dest": "/oauth-callback.html" }
+    ]
+  }
+  
