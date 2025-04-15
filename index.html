@@ -145,10 +145,10 @@
 
             // Validate inputs
             if (!params.totalPartners || !params.deployment || 
-                !['onshore', 'offshore', 'hybrid'].includes(params.deployment)) {
+                !['Onshore', 'Offshore', 'Hybrid'].includes(params.deployment)) {
                 budgetEstimateDiv.innerHTML = `
                     <div class="error-message">
-                        Invalid or missing parameters. Required parameters: partners, low, medium, high, deployment (onshore/offshore/hybrid)
+                        Invalid or missing parameters. Required parameters: partners, low, medium, high, deployment (Onshore/Offshore/Hybrid)
                     </div>
                 `;
                 return;
