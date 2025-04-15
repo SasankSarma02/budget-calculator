@@ -3,134 +3,201 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Budget Calculator</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Budget Estimate</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            width: 100%;
+            max-width: 800px;
+            position: relative;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2d3748;
+            margin-bottom: 40px;
+            font-size: 2rem;
+        }
+
+        #budgetEstimate {
+            padding: 20px;
+            background-color: #f8fafc;
+            border-radius: 6px;
+        }
+
+        .budget-summary {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .budget-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 24px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .budget-card h2 {
+            color: #2d3748;
+            margin-bottom: 16px;
+            font-size: 1.5rem;
+        }
+
+        .total-amount {
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 16px;
+        }
+
+        .deployment-model {
+            color: #4a5568;
+            font-size: 1.1rem;
+            margin-bottom: 16px;
+        }
+
+        .budget-note {
+            color: #718096;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .error-message {
+            color: #e53e3e;
+            text-align: center;
+            font-size: 1rem;
+            padding: 20px;
+            background-color: #fff5f5;
+            border-radius: 6px;
+            border: 1px solid #feb2b2;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <h1>Budget Calculator</h1>
-        <div class="progress-bar">
-            <div class="step active">
-                <div class="step-number">1</div>
-                <div class="step-text">Basic Information</div>
-            </div>
-            <div class="step">
-                <div class="step-number">2</div>
-                <div class="step-text">B2B Ecosystem details</div>
-            </div>
-            <div class="step">
-                <div class="step-number">3</div>
-                <div class="step-text">Your Budget Estimate</div>
-            </div>
-        </div>
-
-        <form id="budgetForm">
-            <!-- Page 1 -->
-            <div class="form-page" id="page1">
-                <div class="form-group">
-                    <label>Name <span class="required">*</span></label>
-                    <div class="name-inputs">
-                        <input type="text" id="firstName" placeholder="First Name" required>
-                        <input type="text" id="lastName" placeholder="Last Name" required>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>Email</label>
-                    <input type="email" id="email">
-                </div>
-                <div class="form-group">
-                    <label>Phone</label>
-                    <input type="tel" id="phone">
-                </div>
-                <div class="form-group">
-                    <label>Company <span class="required">*</span></label>
-                    <input type="text" id="company" required>
-                </div>
-                <div class="button-group">
-                    <button type="button" class="next-btn" onclick="nextPage(1)">Next</button>
-                </div>
-            </div>
-
-            <!-- Page 2 -->
-            <div class="form-page" id="page2" style="display: none;">
-                <div class="form-group">
-                    <label>Current B2B EDI Vendor <span class="required">*</span></label>
-                    <input type="text" id="currentVendor" name="currentVendor" placeholder="Enter your current B2B EDI vendor" required>
-                </div>
-                <div class="form-group">
-                    <label>Current B2B Vendor licensing spend <span class="required">*</span></label>
-                    <div class="currency-input">
-                        <input type="number" id="licensingSpend" name="licensingSpend" step="0.01" min="0" placeholder="Enter amount" required>
-                        <span class="currency-suffix">USD</span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>Total number of partners <span class="required">*</span></label>
-                    <input type="number" id="totalPartners" name="totalPartners" min="0" placeholder="Enter total number of partners" required>
-                </div>
-                <div class="form-group">
-                    <label>Number of B2B transactions per day <span class="required">*</span></label>
-                    <div class="unit-input">
-                        <input type="number" id="transactionsPerDay" name="transactionsPerDay" step="0.1" min="0" placeholder="Enter number of transactions" required>
-                        <span class="unit-suffix">Million(s)</span>
-                    </div>
-                </div>
-                <div class="form-group complexity-section">
-                    <h3>B2B Complexity level</h3>
-                    <div class="form-group">
-                        <label>No of low complex B2B connections <span class="required">*</span></label>
-                        <input type="number" id="lowComplexity" name="lowComplexity" min="0" placeholder="No of low complex B2B connections" required>
-                    </div>
-                    <div class="form-group">
-                        <label>No of medium complex B2B connections <span class="required">*</span></label>
-                        <input type="number" id="mediumComplexity" name="mediumComplexity" min="0" placeholder="No of medium complex B2B connections" required>
-                    </div>
-                    <div class="form-group">
-                        <label>No of high complex B2B connections <span class="required">*</span></label>
-                        <input type="number" id="highComplexity" name="highComplexity" min="0" placeholder="No of high complex B2B connections" required>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>Resource Deployment <span class="required">*</span></label>
-                    <select name="deployment" id="deployment" required>
-                        <option value="">Select Deployment Type</option>
-                        <option value="onshore">Onshore</option>
-                        <option value="offshore">Offshore</option>
-                        <option value="hybrid">Hybrid</option>
-                    </select>
-                </div>
-                <div class="form-group terms-section">
-                    <label>Terms and Conditions <span class="required">*</span></label>
-                    <div class="terms-box">
-                        <p>The budget provided through this form is an approximate estimate only and is intended for general guidance. Actual costs may vary based on the final Scope of Work (SOW), project requirements, and other factors. This estimate does not constitute a formal offer or binding agreement, and final pricing will be confirmed after a detailed assessment and agreement on the SOW</p>
-                    </div>
-                    <label class="checkbox-label">
-                        <input type="checkbox" id="termsAccepted" name="termsAccepted" required>
-                        <span class="checkbox-text">I accept the Terms and Conditions.</span>
-                    </label>
-                </div>
-                <div class="button-group">
-                    <button type="button" class="back-btn" onclick="previousPage(2)">Back</button>
-                    <button type="button" class="next-btn" onclick="nextPage(2)">Next</button>
-                </div>
-            </div>
-
-            <!-- Page 3 -->
-            <div class="form-page" id="page3" style="display: none;">
-                <div class="form-group">
-                    <h2>Your Budget Estimate</h2>
-                    <div id="budgetEstimate" class="mt-4">
-                        <!-- Budget estimate will be inserted here -->
-                    </div>
-                </div>
-
-                <div class="button-group">
-                    <button type="button" class="back-btn" onclick="previousPage(3)">Back</button>
-                </div>
-            </div>
-        </form>
-        <div class="page-indicator">1/3</div>
+        <h1>Budget Estimate</h1>
+        <div id="budgetEstimate"></div>
     </div>
-    <script src="script.js"></script>
+
+    <script>
+        const RATE_CARD = {
+            onshore: {
+                architect: 140,
+                leadDev: 105,
+                dev: 76
+            },
+            hybrid: {
+                architect: 140,
+                leadDev: 60,
+                dev: 30
+            },
+            offshore: {
+                architect: 75,
+                leadDev: 60,
+                dev: 30
+            }
+        };
+
+        function getQueryParams() {
+            const params = new URLSearchParams(window.location.search);
+            return {
+                totalPartners: parseInt(params.get('partners') || '0'),
+                lowComplexity: parseInt(params.get('low') || '0'),
+                mediumComplexity: parseInt(params.get('medium') || '0'),
+                highComplexity: parseInt(params.get('high') || '0'),
+                deployment: params.get('deployment') || ''
+            };
+        }
+
+        function calculateBudget() {
+            const params = getQueryParams();
+            const budgetEstimateDiv = document.getElementById('budgetEstimate');
+
+            // Validate inputs
+            if (!params.totalPartners || !params.deployment || 
+                !['onshore', 'offshore', 'hybrid'].includes(params.deployment)) {
+                budgetEstimateDiv.innerHTML = `
+                    <div class="error-message">
+                        Invalid or missing parameters. Required parameters: partners, low, medium, high, deployment (onshore/offshore/hybrid)
+                    </div>
+                `;
+                return;
+            }
+
+            // Calculate base efforts for each complexity
+            const lowEffortDays = (params.lowComplexity * 0.4) + (params.totalPartners/3); 
+            const mediumEffortDays = (params.mediumComplexity * 2.5) + (params.totalPartners/3);
+            const highEffortDays = (params.highComplexity * 5) + (params.totalPartners/3);
+
+            // Calculate role-wise efforts based on complexity distribution
+            const architectEfforts = (lowEffortDays * 0.1) + (mediumEffortDays * 0.15) + (highEffortDays * 0.2);
+            const leadDevEfforts = (lowEffortDays * 0.1) + (mediumEffortDays * 0.3) + (highEffortDays * 0.55);
+            const devEfforts = (lowEffortDays * 0.8) + (mediumEffortDays * 0.45) + (highEffortDays * 0.25);
+
+            // Calculate costs
+            const architectCost = architectEfforts * RATE_CARD[params.deployment].architect;
+            const leadDevCost = leadDevEfforts * RATE_CARD[params.deployment].leadDev;
+            const devCost = devEfforts * RATE_CARD[params.deployment].dev;
+
+            const totalCost = architectCost + leadDevCost + devCost;
+
+            // Format currency
+            const formatCurrency = (value) => new Intl.NumberFormat('en-US', { 
+                style: 'currency', 
+                currency: 'USD',
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2 
+            }).format(value);
+
+            // Display result
+            budgetEstimateDiv.innerHTML = `
+                <div class="budget-summary">
+                    <div class="budget-card">
+                        <h2>Estimated Project Budget</h2>
+                        <div class="total-amount">${formatCurrency(totalCost)}</div>
+                        <div class="deployment-model">
+                            ${params.deployment.charAt(0).toUpperCase() + params.deployment.slice(1)} Deployment Model
+                        </div>
+                        <div class="budget-note">
+                            This estimate is based on your specific requirements and includes all development resources.
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Calculate budget when page loads
+        window.onload = calculateBudget;
+    </script>
 </body>
 </html> 
